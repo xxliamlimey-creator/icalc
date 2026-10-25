@@ -1,0 +1,262 @@
+﻿<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <title>iCalc</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="stage">
+    <div class="watermark" aria-hidden="true">
+      <span class="wm-mark">iCalc</span>
+      <span class="wm-sub">A calculator for everything.</span>
+    </div>
+
+    <div class="device" id="device">
+      <div class="app" id="app">
+
+        <header class="topbar">
+          <button class="icon-btn" id="modeBtn" aria-label="Choose mode" aria-haspopup="true" aria-expanded="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="4" y="3" width="16" height="18" rx="3.5"></rect>
+              <path d="M8 8h8"></path>
+              <circle cx="8.2" cy="12.4" r=".6" fill="currentColor" stroke="none"></circle>
+              <circle cx="12" cy="12.4" r=".6" fill="currentColor" stroke="none"></circle>
+              <circle cx="15.8" cy="12.4" r=".6" fill="currentColor" stroke="none"></circle>
+              <circle cx="8.2" cy="16.2" r=".6" fill="currentColor" stroke="none"></circle>
+              <circle cx="12" cy="16.2" r=".6" fill="currentColor" stroke="none"></circle>
+              <circle cx="15.8" cy="16.2" r=".6" fill="currentColor" stroke="none"></circle>
+            </svg>
+          </button>
+          <div class="mode-label" id="modeLabel">Basic</div>
+          <button class="icon-btn" id="historyBtn" aria-label="History" aria-haspopup="true" aria-expanded="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="8.5"></circle>
+              <path d="M12 7.5V12l3 1.8"></path>
+            </svg>
+          </button>
+        </header>
+
+        <!-- BASIC / SCIENTIFIC -->
+        <section class="screen screen-calc" id="calcScreen">
+          <div class="display">
+            <div class="display-top">
+              <button class="angle-chip" id="angleChip" aria-label="Toggle angle mode" hidden="">DEG</button>
+              <div class="display-sub" id="displaySub">sin(30) =</div>
+            </div>
+            <div class="display-main pop" id="displayMain">0.5</div>
+          </div>
+          <div class="keypad" id="keypad"><button class="key fn" type="button" data-a="clear" aria-label="all clear">AC</button><button class="key fn" type="button" data-a="sign" aria-label="toggle sign">┬▒</button><button class="key fn" type="button" data-a="percent" aria-label="percent">%</button><button class="key op" type="button" data-a="op" data-v="├╖" aria-label="├╖">├╖</button><button class="key num" type="button" data-a="digit" data-v="7" aria-label="digit 7">7</button><button class="key num" type="button" data-a="digit" data-v="8" aria-label="digit 8">8</button><button class="key num" type="button" data-a="digit" data-v="9" aria-label="digit 9">9</button><button class="key op" type="button" data-a="op" data-v="├ù" aria-label="├ù">├ù</button><button class="key num" type="button" data-a="digit" data-v="4" aria-label="digit 4">4</button><button class="key num" type="button" data-a="digit" data-v="5" aria-label="digit 5">5</button><button class="key num" type="button" data-a="digit" data-v="6" aria-label="digit 6">6</button><button class="key op" type="button" data-a="op" data-v="ΓêÆ" aria-label="minus">ΓêÆ</button><button class="key num" type="button" data-a="digit" data-v="1" aria-label="digit 1">1</button><button class="key num" type="button" data-a="digit" data-v="2" aria-label="digit 2">2</button><button class="key num" type="button" data-a="digit" data-v="3" aria-label="digit 3">3</button><button class="key op" type="button" data-a="op" data-v="+" aria-label="+">+</button><button class="key num wide" type="button" data-a="digit" data-v="0" aria-label="digit 0">0</button><button class="key num" type="button" data-a="dot" aria-label=".">.</button><button class="key op" type="button" data-a="equals" aria-label="equals">=</button></div>
+        </section>
+
+        <!-- UNIT CONVERSION -->
+        <section class="screen screen-convert" id="convertScreen" hidden="">
+          <div class="cat-scroll" id="catScroll" role="tablist" aria-label="Conversion categories"><button type="button" class="cat" data-cat="length" role="tab" aria-selected="false">Length</button><button type="button" class="cat" data-cat="mass" role="tab" aria-selected="false">Weight</button><button type="button" class="cat active" data-cat="temperature" role="tab" aria-selected="true">Temperature</button><button type="button" class="cat" data-cat="speed" role="tab" aria-selected="false">Speed</button><button type="button" class="cat" data-cat="volume" role="tab" aria-selected="false">Volume</button><button type="button" class="cat" data-cat="area" role="tab" aria-selected="false">Area</button><button type="button" class="cat" data-cat="time" role="tab" aria-selected="false">Time</button><button type="button" class="cat" data-cat="data" role="tab" aria-selected="false">Data</button><button type="button" class="cat" data-cat="energy" role="tab" aria-selected="false">Energy</button><button type="button" class="cat" data-cat="pressure" role="tab" aria-selected="false">Pressure</button><button type="button" class="cat" data-cat="angle" role="tab" aria-selected="false">Angle</button><button type="button" class="cat" data-cat="currency" role="tab" aria-selected="false">Currency</button></div>
+
+          <div class="conv-panels">
+            <div class="conv-card">
+              <div class="conv-label">From</div>
+              <div class="conv-field">
+                <input id="convValue" class="conv-input" type="text" inputmode="decimal" value="1" aria-label="Value to convert" autocomplete="off" spellcheck="false">
+                <div class="conv-unit-select">
+                  <select id="convFrom" aria-label="From unit"><option value="c">┬░C  ┬╖  Celsius</option><option value="f">┬░F  ┬╖  Fahrenheit</option><option value="k">K  ┬╖  Kelvin</option></select>
+                  <svg viewBox="0 0 24 24" class="chev" aria-hidden="true"><path d="M8 10l4 4 4-4"></path></svg>
+                </div>
+              </div>
+            </div>
+
+            <button class="swap-btn" id="swapBtn" aria-label="Swap units">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v13M7 17l-3-3M7 17l3-3M17 20V7M17 7l-3 3M17 7l3 3"></path></svg>
+            </button>
+
+            <div class="conv-card conv-result-card">
+              <div class="conv-label">To</div>
+              <div class="conv-field">
+                <div class="conv-out" id="convOut">212</div>
+                <div class="conv-unit-select">
+                  <select id="convTo" aria-label="To unit"><option value="c">┬░C  ┬╖  Celsius</option><option value="f">┬░F  ┬╖  Fahrenheit</option><option value="k">K  ┬╖  Kelvin</option></select>
+                  <svg viewBox="0 0 24 24" class="chev" aria-hidden="true"><path d="M8 10l4 4 4-4"></path></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="conv-note">
+            <span id="convFormula">100 ┬░C = 212 ┬░F</span>
+            <span class="rate-badge" id="rateBadge" hidden=""></span>
+          </div>
+
+          <div class="conv-list-wrap">
+            <div class="conv-list-head">Also equals</div>
+            <div class="conv-list" id="convList"><div class="conv-list-row"><span>Kelvin</span><b>373.15 K</b></div></div>
+          </div>
+        </section>
+
+        <!-- MATH NOTES -->
+        <section class="screen screen-notes" id="notesScreen" hidden="">
+          <div class="notes-scroll" id="notesScroll">
+            <div class="notes-toolbar">
+              <span class="notes-hint">Type an expression, then add <b>=</b></span>
+              <button class="text-btn" id="clearNotes">Clear</button>
+            </div>
+            <div class="vars-bar" id="varsBar"><div class="var-chip"><button class="var-name" type="button">x</button>=<span class="var-val">5</span><button type="button" aria-label="Decrease x">ΓêÆ</button><button type="button" aria-label="Increase x">+</button></div></div>
+            <div class="note-lines" id="noteLines"><div class="note-line"><span class="row-num">1</span><input class="note-input" type="text" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" data-index="0" aria-label="Math note line 1" placeholder="Try 12 + 7 ="><span class="note-result solved">19</span></div><div class="note-line"><span class="row-num">2</span><input class="note-input" type="text" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" data-index="1" aria-label="Math note line 2"><span class="note-result"></span></div><div class="note-line graphable"><span class="row-num">3</span><input class="note-input" type="text" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" data-index="2" aria-label="Math note line 3"><span class="note-result graph-chip">Graph</span></div><div class="note-line graphable"><span class="row-num">4</span><input class="note-input" type="text" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" data-index="3" aria-label="Math note line 4"><span class="note-result graph-chip">Graph</span></div></div>
+
+            <div class="graph-card" id="graphCard">
+              <div class="graph-head">
+                <span class="graph-title">Graph</span>
+                <div class="graph-actions">
+                  <button data-graph="out" aria-label="Zoom out">ΓêÆ</button>
+                  <button data-graph="in" aria-label="Zoom in">+</button>
+                  <button data-graph="reset" class="graph-reset">Reset</button>
+                </div>
+              </div>
+              <div class="graph-canvas-wrap">
+                <canvas id="graphCanvas" width="1" height="1"></canvas>
+              </div>
+              <div class="graph-legend" id="graphLegend"><span class="legend-item"><span class="legend-dot" style="background: rgb(255, 159, 10);"></span><span>y = x^2 + 1</span></span><span class="legend-item"><span class="legend-dot" style="background: rgb(10, 132, 255);"></span><span>y = sin(x)</span></span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- MODE MENU -->
+        <div class="mode-menu" id="modeMenu" role="menu" aria-hidden="true">
+          <button class="mode-item active" data-mode="basic" role="menuitem">
+            <svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="3"></rect><path d="M8.5 8h7"></path><circle cx="9" cy="12.5" r=".7" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12.5" r=".7" fill="currentColor" stroke="none"></circle><circle cx="15" cy="12.5" r=".7" fill="currentColor" stroke="none"></circle><circle cx="9" cy="16" r=".7" fill="currentColor" stroke="none"></circle><circle cx="12" cy="16" r=".7" fill="currentColor" stroke="none"></circle><circle cx="15" cy="16" r=".7" fill="currentColor" stroke="none"></circle></svg>
+            <span>Basic</span><span class="check">Γ£ô</span>
+          </button>
+          <button class="mode-item" data-mode="scientific" role="menuitem">
+            <svg viewBox="0 0 24 24"><path d="M4 18c3.5 0 5.5-12 9-12 2.2 0 3.5 2.5 3.5 6S15.2 18 17 18h3"></path><path d="M4 18h1"></path></svg>
+            <span>Scientific</span><span class="check">Γ£ô</span>
+          </button>
+          <button class="mode-item" data-mode="notes" role="menuitem">
+            <svg viewBox="0 0 24 24"><path d="M5 4.5h14v15H5z"></path><path d="M8 9h8M8 12.5h5"></path><path d="M8 16.5h3"></path></svg>
+            <span>Math Notes</span><span class="check">Γ£ô</span>
+          </button>
+          <button class="mode-item" data-mode="convert" role="menuitem">
+            <svg viewBox="0 0 24 24"><path d="M4 8h13M13 4l4 4-4 4"></path><path d="M20 16H7M11 12l-4 4 4 4"></path></svg>
+            <span>Unit Conversion</span><span class="check">Γ£ô</span>
+          </button>
+        </div>
+
+        <!-- HISTORY -->
+        <div class="scrim" id="scrim"></div>
+        <section class="sheet" id="historySheet" aria-hidden="true" aria-label="History">
+          <div class="sheet-grabber"></div>
+          <div class="sheet-head">
+            <h2>History</h2>
+            <button id="clearHistory">Clear</button>
+          </div>
+          <div class="history-list" id="historyList"><div class="history-item" role="button" tabindex="0"><div class="history-main"><div class="history-expr">sin(30)</div><div class="history-result">0.5</div></div><button class="history-copy" type="button" aria-label="Copy result"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5.5A1.5 1.5 0 0 1 6.5 4H15"></path></svg></button></div><div class="history-item" role="button" tabindex="0"><div class="history-main"><div class="history-expr">0.5+0.2├ù3</div><div class="history-result">1.1</div></div><button class="history-copy" type="button" aria-label="Copy result"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5.5A1.5 1.5 0 0 1 6.5 4H15"></path></svg></button></div><div class="history-item" role="button" tabindex="0"><div class="history-main"><div class="history-expr">50+10%</div><div class="history-result">55</div></div><button class="history-copy" type="button" aria-label="Copy result"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5.5A1.5 1.5 0 0 1 6.5 4H15"></path></svg></button></div><div class="history-item" role="button" tabindex="0"><div class="history-main"><div class="history-expr">12+7├ù3</div><div class="history-result">33</div></div><button class="history-copy" type="button" aria-label="Copy result"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5.5A1.5 1.5 0 0 1 6.5 4H15"></path></svg></button></div></div>
+        </section>
+
+        <div class="toast" id="toast" role="status"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="math.js"></script>
+  <script src="units.js"></script>
+  <script src="app.js"></script>
+  <script src="convert.js"></script>
+  <script src="notes.js"></script>
+  <script>window.__icalc.boot();</script>
+
+<script>
+window.__errors = [];
+window.addEventListener("error", function (e) { window.__errors.push(e.message); });
+setTimeout(function () {
+  var out = [];
+  var $ = function (s) { return document.querySelector(s); };
+  function click(a, v) {
+    var sel = ".key[data-a='" + a + "']" + (v !== undefined ? "[data-v='" + v + "']" : "");
+    var k = document.querySelector(sel);
+    if (!k) { out.push("MISSING KEY " + a + " " + v); return; }
+    k.click();
+  }
+  function snap(n) {
+    out.push(n + " => [" + $("#displayMain").textContent + "] sub [" + $("#displaySub").textContent + "]");
+  }
+  try {
+    click("digit", "1"); click("digit", "2"); snap("12");
+    click("op", "+"); click("digit", "7"); click("op", "├ù"); click("digit", "3"); click("equals"); snap("12+7*3");
+    click("clear"); click("digit", "5"); click("digit", "0"); click("op", "+"); click("digit", "1"); click("digit", "0"); click("percent"); click("equals"); snap("50+10%");
+    click("clear"); click("digit", "0"); click("dot"); click("digit", "5"); click("op", "+"); click("digit", "0"); click("dot"); click("digit", "2"); click("op", "├ù"); click("digit", "3"); click("equals"); snap("0.5+0.2*3");
+
+    window.__icalc.setMode("scientific");
+    out.push("mode=" + window.__icalc.state.mode + " sciKeys=" + document.querySelectorAll(".key.sci").length);
+    click("insert", "sin("); click("digit", "3"); click("digit", "0"); click("insert", ")"); click("equals"); snap("sin(30)");
+
+    document.querySelector("#historyBtn").click();
+    out.push("historyItems=" + document.querySelectorAll(".history-item").length + " sheetOpen=" + document.querySelector("#historySheet").classList.contains("open"));
+    document.querySelector("#historySheet .history-item").click();
+    snap("historyReuse");
+
+    window.__icalc.setMode("notes");
+    var inp0 = document.querySelector(".note-input[data-index='0']");
+    inp0.value = "12 + 7=";
+    inp0.dispatchEvent(new Event("input", { bubbles: true }));
+    out.push("noteResult0=" + document.querySelectorAll(".note-result")[0].textContent);
+    inp0.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter", bubbles: true }));
+    var inp1 = document.querySelector(".note-input[data-index='1']");
+    inp1.value = "x = 4";
+    inp1.dispatchEvent(new Event("input", { bubbles: true }));
+    inp1.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter", bubbles: true }));
+    var inp2 = document.querySelector(".note-input[data-index='2']");
+    inp2.value = "y = x^2 + 1";
+    inp2.dispatchEvent(new Event("input", { bubbles: true }));
+    out.push("vars=[" + document.querySelector("#varsBar").textContent.trim().replace(/\s+/g, " ") + "]");
+    out.push("graphHidden=" + document.querySelector("#graphCard").hidden + " legend=[" + document.querySelector("#graphLegend").textContent + "]");
+    inp2.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter", bubbles: true }));
+    var inp3 = document.querySelector(".note-input[data-index='3']");
+    inp3.value = "y = sin(x)";
+    inp3.dispatchEvent(new Event("input", { bubbles: true }));
+    out.push("legend2=[" + document.querySelector("#graphLegend").textContent + "] canvas=" + document.querySelector("#graphCanvas").width + "x" + document.querySelector("#graphCanvas").height);
+    var inc = document.querySelector(".var-chip button[aria-label='Increase x']");
+    if (inc) inc.click();
+    out.push("afterStep line1=[" + document.querySelector(".note-input[data-index='1']").value + "] result0=[" + document.querySelectorAll(".note-result")[0].textContent + "]");
+
+    window.__icalc.setMode("convert");
+    var cv = document.querySelector("#convValue");
+    cv.value = "2"; cv.dispatchEvent(new Event("input", { bubbles: true }));
+    out.push("conv 2m=" + document.querySelector("#convOut").textContent + " formula=[" + document.querySelector("#convFormula").textContent + "]");
+    document.querySelector(".cat[data-cat='temperature']").click();
+    cv.value = "100"; cv.dispatchEvent(new Event("input", { bubbles: true }));
+    out.push("conv 100C=" + document.querySelector("#convOut").textContent + " badgeHidden=" + document.querySelector("#rateBadge").hidden);
+
+    window.__icalc.setMode("basic");
+    var pad = document.querySelector("#keypad");
+    var zero = document.querySelector(".key.wide");
+    var one = document.querySelector(".key[data-a='digit'][data-v='7']");
+    var zr = zero.getBoundingClientRect(), or = one.getBoundingClientRect();
+    out.push("layout padW=" + Math.round(pad.getBoundingClientRect().width) + " key=" + Math.round(or.width) + " zeroH=" + Math.round(zr.height) + " keyH=" + Math.round(or.height) + " bottom=" + Math.round(zr.bottom));
+    out.push("errors=" + JSON.stringify(window.__errors));
+  } catch (err) {
+    out.push("EXCEPTION " + err.message + " " + err.stack);
+  }
+  var pre = document.createElement("pre");
+  pre.id = "testout";
+  pre.textContent = out.join("\n");
+  document.body.appendChild(pre);
+}, 600);
+</script>
+
+
+<pre id="testout">12 =&gt; [12] sub []
+12+7*3 =&gt; [33] sub [12+7├ù3 =]
+50+10% =&gt; [55] sub [50+10% =]
+0.5+0.2*3 =&gt; [1.1] sub [0.5+0.2├ù3 =]
+mode=scientific sciKeys=12
+sin(30) =&gt; [0.5] sub [sin(30) =]
+historyItems=4 sheetOpen=true
+historyReuse =&gt; [0.5] sub [sin(30) =]
+noteResult0=19
+vars=[x=4ΓêÆ+]
+graphHidden=false legend=[]
+legend2=[] canvas=300x150
+afterStep line1=[x = 5] result0=[19]
+conv 2m=6.5617 formula=[2 m = 6.5617 ft]
+conv 100C=212 badgeHidden=true
+layout padW=299 key=69 zeroH=69 keyH=69 bottom=526
+errors=[]</pre></body></html>

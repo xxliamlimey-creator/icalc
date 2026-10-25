@@ -1,0 +1,17 @@
+﻿<!doctype html><html><head><style>
+body{margin:0;background:#111;padding:20px}
+.pad{width:350px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.pad.b{grid-template-columns:repeat(4,minmax(0,1fr))}
+.key{aspect-ratio:1/1;background:#333;border:none;border-radius:50%;color:#fff;font-size:30px;display:grid;place-items:center;min-width:0}
+.wide{grid-column:span 2;border-radius:999px;justify-items:start;padding-left:29px}
+.key.c{aspect-ratio:auto;height:80px}
+.pad.d{grid-auto-rows:1fr;height:440px}
+</style></head><body>
+<div class="pad a" id="a"></div>
+<div class="pad b" id="b"></div>
+<div class="pad a" id="c"></div>
+<script>
+function fill(id, opts){const p=document.getElementById(id);for(let i=0;i<19;i++){const b=document.createElement('button');b.className='key';if(opts&&opts.c)b.classList.add('c');b.textContent=i;if(i===16){b.classList.add('wide');if(opts&&opts.fix) b.style.aspectRatio='auto',b.style.height='100%';}p.appendChild(b)}}
+fill('a');fill('b');fill('c');
+setTimeout(()=>{document.title=['a:'+getComputedStyle(document.getElementById('a')).gridTemplateColumns,'b:'+getComputedStyle(document.getElementById('b')).gridTemplateColumns,'c:'+getComputedStyle(document.getElementById('c')).gridTemplateColumns].join(' | ');},200);
+</script></body></html>
